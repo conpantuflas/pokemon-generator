@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import Card from '../componentes/Card';
 import Navbar from '../componentes/Navbar';
 
 const Home = () => {
-    useEffect(()=>{
-        const url = `https://pokeapi.co/api/v2/pokemon/pikachu/`
-        fetch(url)
-        .then((resp)=>resp.json())
-        .then((data)=> console.log(data));
-    },[])
+    const [data, setData] = useState('')
+
 
     return (
         <div>
-          <Navbar />
-          <Card />  
+          <Navbar setData={setData} />
+          {
+            data !== '' ?  <Card src={data.sprites.front_default} title={data.name} type={data.types[0].type.name}/> 
+            : null
+          } 
         </div>
     );
 }
